@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>icon / danger</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon-/-danger" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M12,2 C17.514,2 22,6.486 22,12 C22,17.514 17.514,22 12,22 C6.486,22 2,17.514 2,12 C2,6.486 6.486,2 12,2 Z M12,20 C16.411,20 20,16.411 20,12 C20,7.589 16.411,4 12,4 C7.589,4 4,7.589 4,12 C4,16.411 7.589,20 12,20 Z M14.293,8.293 L15.707,9.707 L13.414,12 L15.707,14.293 L14.293,15.707 L12,13.414 L9.707,15.707 L8.293,14.293 L10.586,12 L8.293,9.707 L9.707,8.293 L12,10.586 L14.293,8.293 Z" id="Icon" fill="#FC7E7A"></path>
+    </g>
+</svg>

@@ -23,6 +23,7 @@ data Welcome = Welcome
 newtype Layout a = Layout a 
 
 instance ToJSON Book
+instance FromJSON Book
 
 instance HtmlComponent a => ToMarkup (Layout a) where
     toMarkup = html

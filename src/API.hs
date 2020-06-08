@@ -41,7 +41,8 @@ import GHC.TypeLits
 import Text.Blaze.Html
 import Text.Blaze.Html.Renderer.Utf8
 import Network.HTTP.Media ((//), (/:))
-
+import Views
+import Models
 
 
 -- | private data that needs protection
@@ -57,17 +58,12 @@ newtype PublicData = PublicData { somedata :: Text }
 instance ToJSON PublicData
 instance ToJSON User
 
-
-newtype User = User { userName :: Text }
-  deriving (Eq, Show, Generic)
-
-
 type PublicAPI = "login" :> QueryParam "username" Text :> QueryParam "password" Text :> Get '[JSON] (Headers '[Header "Set-Cookie" SetCookie] [PublicData])
             :<|> "test" :> Get '[JSON] [User]
 
-type GetList a = Get '[JSON] [a]
-type GetOne a i = Capture "id" i :> Get '[JSON] a
-type CreateNew a = ReqBody '[JSON] a :> Post '[JSON] NoContent
+type GetList a = Get '[JSON, Html] (Layout [a])
+type GetOne a i = Capture "id" i :> Get '[JSON, Html] (Layout a)
+type CreateNew a = ReqBody '[JSON] a :> Post '[JSON, Html] NoContent
 
 type Crud (name :: Symbol) a i = name :> 
   (    GetList a
@@ -75,10 +71,6 @@ type Crud (name :: Symbol) a i = name :>
   :<|> CreateNew a
   )
 
-data Book = Book { isbn :: String } deriving (Show, Generic)
-
-instance ToJSON Book
-instance FromJSON Book
 
 type Redirect a = Headers '[Header "location" a] NoContent
 
@@ -125,14 +117,14 @@ genAuthServerContext pool = authHandler pool :. EmptyContext
 
 
 genAuthServer :: ServerT AuthGenAPI App
-genAuthServer = crud (\ (UserDatabaseModel u p) -> Book "isdsadbdn222")
+genAuthServer = crud (\ (UserDatabaseModel u p) -> Book "isdsadbdn222" "testNkjhkhjkhkjame")
 
 getBooks f = do
   elements <- runQuery (selectList [] [])
-  return $ map (f . (\ (Entity k v) -> v)) $ elements
+  return $ Layout $ map (f . (\ (Entity k v) -> v)) $ elements
 
-editBook :: Int -> App Book
-editBook _ = return (Book "dadsa")
+editBook :: Int -> App (Layout Book)
+editBook _ = return $ Layout (Book "dadsa" "name")
   
 createBook :: Book -> App NoContent
 createBook b = return NoContent
@@ -141,9 +133,9 @@ crud f = getBooks f :<|> editBook :<|> createBook
 
 redirect link = return $ addHeader link NoContent
 
-privateDataFunc (User name) = do
+privateDataFunc (User name email) = do
   pool <- asks db
-  return (PrivateData ("this is a secret: " <> name))
+  return (PrivateData ("this is a secret: " <> (pack name)))
 
 login :: Maybe Text -> Maybe Text -> App (Headers '[Header "Set-Cookie" SetCookie] [PublicData])
 login (Just name) (Just pw) = do
@@ -157,7 +149,7 @@ getUsers = do
   return $ map toUser users
 
 toUser :: Entity UserDatabaseModel -> User
-toUser (Entity k (UserDatabaseModel name pw)) = User (Data.Text.pack name)
+toUser (Entity k (UserDatabaseModel name pw)) = User name pw
 
   -- | run our server
 genAuthMain :: IO ()
