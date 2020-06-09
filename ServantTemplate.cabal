@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4d484a8c885619374cc8eb881149609f3fa3ef2ffa31fe5353305170b2bab867
+-- hash: df67f4e97051a431fa6e84703b5a360904bf913e5f7daa758b224fb8aa7d3af6
 
 name:           ServantTemplate
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       API
       Config
       Database
+      Forms
       Lib
       Models
       Queries

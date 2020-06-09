@@ -36,7 +36,7 @@ SessionDatabaseModel sql=session
 
 -- authorId PersonId
 
-connStr = "host=localhost dbname=test user=postgres password=test port=5432"
+connStr = "host=localhost dbname=postgres user=postgres password=test port=5432"
 
 makePool :: IO ConnectionPool
 makePool = runStderrLoggingT $ createPostgresqlPool connStr 10
