@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+@import "external-includes";
+
+@import "variables";
+
+@import "ditmer-embla/lib/scss/embla";
+
+$background-color: rgba(241, 245, 248, .5);
+
+@import "shared";

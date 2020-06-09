@@ -64,6 +64,7 @@ dependencies:
 - bytestring
 - postgresql-libpq
 - mtl
+- blaze-svg
 
 library:
   source-dirs: src

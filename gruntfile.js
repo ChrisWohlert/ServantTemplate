@@ -100,7 +100,7 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: path.resolve(__dirname + "/www/styles/"),
                         src: [
-                            "shared.scss"
+                            "site.scss"
                         ],
                         dest: path.join(__dirname, "dist/css"),
                         ext: '.css'

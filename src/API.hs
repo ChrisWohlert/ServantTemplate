@@ -8,7 +8,6 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE TypeOperators         #-}
 {-# LANGUAGE UndecidableInstances  #-}
-{-# LANGUAGE DefaultSignatures     #-}
 {-# LANGUAGE PolyKinds             #-}
 {-# LANGUAGE AllowAmbiguousTypes   #-}
 
@@ -26,8 +25,8 @@ import Network.Wai.Handler.Warp
 import Servant.API                      
 import Servant.API.BasicAuth            
 import Servant.API.Experimental.Auth    
-import Servant                          
-import Servant.Server                   
+import Servant                         hiding (layout)  
+import Servant.Server                  hiding (layout)  
 import Servant.Server.Experimental.Auth
 import Web.Cookie                      
 import Database
@@ -44,6 +43,8 @@ import Network.HTTP.Media ((//), (/:))
 import Views
 import Models
 import Forms
+import Components
+
 
 
 -- | private data that needs protection
@@ -104,6 +105,7 @@ authHandler pool = mkAuthHandler handler
 
 
 type AuthGenAPI = Crud "book" Book Int
+            :<|> "dist" :> Raw
 
 
 genAuthAPI :: Proxy AuthGenAPI
@@ -118,14 +120,15 @@ genAuthServerContext pool = authHandler pool :. EmptyContext
 
 
 genAuthServer :: ServerT AuthGenAPI App
-genAuthServer = crud (\ (UserDatabaseModel u p) -> Book "isdsadbdn222" "Heyo Post!")
+genAuthServer = crud (\ (UserDatabaseModel u p) -> Book "isdsadbdn222" "Heyo Post!") 
+           :<|> serveDirectoryWebApp "dist"
 
 getBooks f = do
   elements <- runQuery (selectList [] [])
-  return $ Layout $ map (f . (\ (Entity k v) -> v)) $ elements
+  return $ layout $ map (f . (\ (Entity k v) -> v)) $ elements
 
 editBook :: Int -> App (Layout Book)
-editBook _ = return $ Layout (Book "dadsa" "name")
+editBook _ = return $ layout (Book "dadsa" "name")
   
 createBook :: Book -> App NoContent
 createBook b = return NoContent
@@ -169,3 +172,17 @@ app cfg =
 
 nt :: AppEnv -> App a -> Handler a
 nt s x = runReaderT x s
+
+
+
+layout = Layout menu
+
+api = Proxy :: Proxy AuthGenAPI
+
+menu = LeftMenu (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) "Hallo" [MenuLink Tag (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) "Link books!"]
+
+
+
+type CrudListLink a n = n :> GetList a
+
+type A = "book" :>  Get '[JSON, Html] (Layout [Book])

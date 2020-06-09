@@ -1,10 +1,114 @@
-
-$color-primary: red;
-$color-secondary: green;
 $base-icon-path: "/dist/icons/";
- 
+$login-image-url: "/Content/images/login.jpg";
+
+
+$color-primary:           #339967 !default;
+$color-primary-dark:      #006A3C !default;
+$color-primary-light:     #68CB95 !default;
+
+$color-secondary:         #FF8200 !default;
+$color-secondary-dark:    #C55300 !default;
+$color-secondary-light:   #FFB343 !default;
+
+$color-tertiary:          #61D2D3 !default;
+$color-tertiary-dark:     #21A0A2 !default;
+$color-tertiary-light:    #97FFFF !default;
+
+
+//Override embla color and default variables by inserting and changing below variables
+/* Embla variables:
+
+// settings/_settings.defaults.scss
+$font-family-sans-serif:  'Roboto', Helvetica, Arial, sans-serif !default;
+$font-family-base:        $font-family-sans-serif !default;
+$font-family-headings:    $font-family-sans-serif !default;
+
+$font-size-root:          16px !default;
+
+$font-size-base:          $font-size-root * 0.875 !default;
+
+
+$font-weight-thin:        100 !default;
+$font-weight-light:       300 !default;
+$font-weight-regular:     400 !default;
+$font-weight-medium:      500 !default;
+$font-weight-bold:        700 !default;
 
 
 
+$box-shadow-color:          rgba(0, 0, 0, .1) !default;
+$default-box-shadow:        0 1px 4px 0 $box-shadow-color !default;
+
+$default-border-color:      $color-gray-85 !default;
+$default-border:            1px solid $default-border-color !default;
+$input-border:              $color-gray-70 !default;
+$focus-border:              $color-gray-45 !default;
+
+$border-radius-base:        2px !default;
+$border-radius-large:       2px !default;
+$border-radius-small:       2px !default;
+
+$base-icon-path:            "/assets/dist/icons/" !default;
+
+$disabled-opacity:          .65 !default;
+$disabled-text-opacity:     .5 !default;
+$disabled-background-color:  $color-gray-95 !default;
+
+$outline-border-opacity: .35 !default;
+$outline-box-shadow: 0 0 0 3px !default;
+*/
+/*
+// settings/_settings.colors.scss
 
 
+$color-gray-15:         #333 !default;
+$color-gray-45:         #555 !default;
+$color-gray-60:         #999 !default;
+$color-gray-70:         #b8b8b8 !default;
+$color-gray-85:         #dcdcdc !default;
+$color-gray-95:         #f2f2f2 !default;
+
+$color-white:           #fff !default;
+
+$color-success:         #71DC9C !default;
+$color-success-dark:    darken($color-success, 10%) !default;
+$color-success-light:   #C6F1D7 !default;
+
+$color-warning:         #F3D15D !default;
+$color-warning-dark:    darken($color-warning, 10%) !default;
+$color-warning-light:   #FAECBE !default;
+
+$color-danger:          #FC7E7A !default;
+$color-danger-dark:     darken($color-danger, 10%) !default;
+$color-danger-light:    #FDCBC9 !default;
+
+$color-info:            #aac9de !default;
+$color-info-dark:       darken($color-info, 10%) !default;
+$color-info-light:      #dde9f2 !default;
+
+
+$text-color:            $color-gray-45 !default;
+$text-color-subtle:     rgba($text-color, 0.65) !default;
+$text-color-disabled:   rgba($text-color, 0.35) !default;
+
+$text-heading-color:          $color-gray-15 !default;
+$text-heading-color-subtle:   rgba($text-heading-color, 0.65) !default;
+
+//Bootstrap overrides
+$gray-base:             $color-gray-70 !default;
+$gray-darker:           $color-gray-15 !default;
+$gray-dark:             $color-gray-45 !default;
+$gray:                  $color-gray-70 !default;
+$gray-light:            $color-gray-85 !default;
+$gray-lighter:          $color-gray-95 !default;
+
+$brand-primary:         $color-primary !default;
+$brand-success:         $color-success !default;
+$brand-info:            $color-info !default;
+$brand-warning:         $color-warning !default;
+$brand-danger:          $color-danger !default;
+
+$state-danger-text:     $color-danger !default;
+
+$validation-error:      $color-danger !default;
+*/

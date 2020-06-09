@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: df67f4e97051a431fa6e84703b5a360904bf913e5f7daa758b224fb8aa7d3af6
+-- hash: 6ee0ff436076eac99561b922aaa1380bc4764b2a1194551bba570983f5294aa8
 
 name:           ServantTemplate
 version:        0.1.0.0
@@ -28,9 +28,11 @@ source-repository head
 library
   exposed-modules:
       API
+      Components
       Config
       Database
       Forms
+      Handlers
       Lib
       Models
       Queries
@@ -45,6 +47,7 @@ library
     , base >=4.7 && <5
     , blaze-html
     , blaze-markup
+    , blaze-svg
     , bytestring
     , containers
     , cookie
@@ -90,6 +93,7 @@ executable ServantTemplate-exe
     , base >=4.7 && <5
     , blaze-html
     , blaze-markup
+    , blaze-svg
     , bytestring
     , containers
     , cookie
@@ -136,6 +140,7 @@ test-suite ServantTemplate-test
     , base >=4.7 && <5
     , blaze-html
     , blaze-markup
+    , blaze-svg
     , bytestring
     , containers
     , cookie
