@@ -43,7 +43,6 @@ instance HtmlComponent a => HtmlComponent (Layout a) where
                 html menu
                 html x
                 p "help"
-                button ! class_ "btn btn-primary" $ "Heyo"
                 insertScripts
                 where
                     insertScripts = mconcat $ map toScript (scripts l ++ scripts x)

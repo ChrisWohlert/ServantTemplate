@@ -179,7 +179,10 @@ layout = Layout menu
 
 api = Proxy :: Proxy AuthGenAPI
 
-menu = LeftMenu (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) "Hallo" [MenuLink Tag (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) "Link books!"]
+menu = LeftMenu 
+  (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) 
+  "Hallo" 
+  [MenuLink Tag (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) "Link books!"]
 
 
 
