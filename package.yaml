@@ -65,6 +65,7 @@ dependencies:
 - postgresql-libpq
 - mtl
 - blaze-svg
+- process
 
 library:
   source-dirs: src

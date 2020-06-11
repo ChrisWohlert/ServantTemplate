@@ -14,6 +14,7 @@ import           Foreign.Store            (Store (..), lookupStore, readStore,
 import           GHC.Word                 (Word32)
 import           Network.Wai.Handler.Warp (defaultSettings, runSettings,
                                            setPort)
+import System.Process
 
 main :: IO ()
 main = genAuthMain

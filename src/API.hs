@@ -44,7 +44,7 @@ import Views
 import Models
 import Forms
 import Components
-
+import Data.Foldable
 
 
 -- | private data that needs protection
@@ -63,7 +63,7 @@ instance ToJSON User
 type PublicAPI = "login" :> QueryParam "username" Text :> QueryParam "password" Text :> Get '[JSON] (Headers '[Header "Set-Cookie" SetCookie] [PublicData])
             :<|> "test" :> Get '[JSON] [User]
 
-type GetList a = Get '[JSON, Html] (Layout [a])
+type GetList a = Get '[JSON, Html] (Layout (Table a))
 type GetOne a i = Capture "id" i :> Get '[JSON, Html] (Layout a)
 type CreateNew a = ReqBody '[JSON] a :> Post '[JSON, Html] NoContent
 
@@ -123,9 +123,11 @@ genAuthServer :: ServerT AuthGenAPI App
 genAuthServer = crud (\ (UserDatabaseModel u p) -> Book "isdsadbdn222" "Heyo Post!") 
            :<|> serveDirectoryWebApp "dist"
 
+getBooks :: (UserDatabaseModel -> Book) -> App (Layout (Table Book))
 getBooks f = do
   elements <- runQuery (selectList [] [])
-  return $ layout $ map (f . (\ (Entity k v) -> v)) $ elements
+  let books = map (f . (\ (Entity k v) -> v)) elements
+  return $ crudList books
 
 editBook :: Int -> App (Layout Book)
 editBook _ = return $ layout (Book "dadsa" "name")
@@ -177,15 +179,17 @@ nt s x = runReaderT x s
 
 layout = Layout menu
 
+crudList l = Layout menu . Table $ (toTableHeader l) l
+
 api = Proxy :: Proxy AuthGenAPI
 
 menu = LeftMenu 
   (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) 
   "Hallo" 
-  [MenuLink Tag (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) "Link books!"]
+  [MenuLink Tag (safeLink api (Proxy :: Proxy (CrudListLink Book "book"))) "Link bdsooks!"]
 
 
 
 type CrudListLink a n = n :> GetList a
 
-type A = "book" :>  Get '[JSON, Html] (Layout [Book])
+type A = "book" :>  Get '[JSON, Html] (Layout (Table Book))

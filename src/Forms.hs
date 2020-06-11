@@ -1,5 +1,4 @@
 {-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
@@ -9,16 +8,11 @@
 
 module Forms where
 
-import GHC.Generics       
-import Data.Proxy                                     
+import GHC.Generics                                   
+import Components
+import Labels
+import Data.Proxy       
 
-
-
-
-data InputField = InputField { iptype :: String, ipValue :: String, ipName :: String } 
-                | LabelField LabelText InputField
-                | ListField [InputField]
-                deriving (Show) 
 
 class ToForm' f where
   toForm' :: f p -> [InputField]
@@ -48,19 +42,8 @@ instance (ToForm' f) => ToForm' (M1 i t f) where
   toForm' (M1 x) = toForm' x
 
 
-data LabelText = LabelUsername | LabelPassword deriving (Show)
-
-data FormInput (l :: LabelText) a = FormInput a deriving (Show, Generic)
-
-data Test = TestUser { tusername :: FormInput 'LabelUsername String, tpassword :: FormInput LabelPassword String, tage :: Int, tsession :: Session } deriving (Show, Generic)
-
-data Session = Session { sid :: String, sexpires :: String } deriving (Show, Generic)
-
 instance ToForm Char where
   toForm x = []
-
-instance ToForm Test
-instance ToForm Session
 
 instance {-# Overlaps #-} (Selector s, ToInputField t) => ToForm' (M1 S s (K1 R t)) where
   toForm' x@(M1 e) = [toInputField (selName x) (unK1 e)]
@@ -76,15 +59,3 @@ instance (ToInputField a, LabelVal l) => ToInputField (FormInput l a) where
 
 instance ToInputField Int where
   toInputField n v = InputField "number" (show v) n
-  
-instance ToInputField Session where
-  toInputField n s = ListField (toForm s)
-
-class LabelVal a where
-  labelVal :: Proxy a -> LabelText
-
-instance LabelVal 'LabelUsername where
-  labelVal _ = LabelUsername
-
-instance LabelVal 'LabelPassword where
-  labelVal _ = LabelPassword

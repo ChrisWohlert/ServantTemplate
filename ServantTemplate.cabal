@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6ee0ff436076eac99561b922aaa1380bc4764b2a1194551bba570983f5294aa8
+-- hash: 6f8b907e3635e319c191fc1084f1ef441a699a305ad4b5080c42901c4323bfe6
 
 name:           ServantTemplate
 version:        0.1.0.0
@@ -33,9 +33,11 @@ library
       Database
       Forms
       Handlers
+      Labels
       Lib
       Models
       Queries
+      Rows
       Views
   other-modules:
       Paths_ServantTemplate
@@ -63,6 +65,7 @@ library
     , persistent-postgresql
     , persistent-template
     , postgresql-libpq
+    , process
     , servant
     , servant-auth
     , servant-auth-server
@@ -109,6 +112,7 @@ executable ServantTemplate-exe
     , persistent-postgresql
     , persistent-template
     , postgresql-libpq
+    , process
     , servant
     , servant-auth
     , servant-auth-server
@@ -156,6 +160,7 @@ test-suite ServantTemplate-test
     , persistent-postgresql
     , persistent-template
     , postgresql-libpq
+    , process
     , servant
     , servant-auth
     , servant-auth-server

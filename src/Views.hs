@@ -61,8 +61,16 @@ instance HtmlComponent Book where
 instance ToJSON a => ToJSON (Layout a) where
     toJSON (Layout m x) = toJSON x
 
+instance ToJSON a => ToJSON (Table a) where
+    toJSON (Table hs rows) = toJSON rows
+
 instance HtmlComponent [Book] where
     html xs = mconcat $ map html xs
+
+instance (HtmlComponent a) => HtmlComponent (Table a) where
+    html (Table hs rows) = mconcat $ map (\ r -> do
+        p "Test"
+        html r) rows
 
 class HtmlComponent a where
     html :: a -> Html
@@ -86,7 +94,7 @@ instance HtmlComponent Menu where
                         sp ! class_ "hamburger-box" $
                             sp ! class_ "hamburger-inner" $ ""
                 d ! class_ "left-menu-header-text" $
-                    a ! href (textValue . toUrlPiece $ link) $ "Hallo"
+                    a ! href (textValue . toUrlPiece $ link) $ "Helld156dsdsdsasdsao"
             d ! class_ "left-menu-links" $
                 d ! class_ "left-menu-group" $
                     mconcat $ map html menuLinks
