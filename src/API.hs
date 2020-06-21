@@ -45,6 +45,8 @@ import Models
 import Forms
 import Components
 import Data.Foldable
+import Labels
+import Tables
 
 
 -- | private data that needs protection
@@ -120,7 +122,7 @@ genAuthServerContext pool = authHandler pool :. EmptyContext
 
 
 genAuthServer :: ServerT AuthGenAPI App
-genAuthServer = crud (\ (UserDatabaseModel u p) -> Book "isdsadbdn222" "Heyo Post!") 
+genAuthServer = crud (\ (UserDatabaseModel u p) -> (Book (LabelField "test") (LabelField "Hallo"))) 
            :<|> serveDirectoryWebApp "dist"
 
 getBooks :: (UserDatabaseModel -> Book) -> App (Layout (Table Book))
@@ -130,7 +132,7 @@ getBooks f = do
   return $ crudList books
 
 editBook :: Int -> App (Layout Book)
-editBook _ = return $ layout (Book "dadsa" "name")
+editBook _ = return $ layout (Book (LabelField "dadsa") (LabelField "name"))
   
 createBook :: Book -> App NoContent
 createBook b = return NoContent
@@ -179,7 +181,8 @@ nt s x = runReaderT x s
 
 layout = Layout menu
 
-crudList l = Layout menu . Table $ (toTableHeader l) l
+crudList :: (ToTableHeaders a) => [a] -> Layout (Table a)
+crudList l = layout (Table (toTableHeaders (Proxy :: Proxy a)) l)
 
 api = Proxy :: Proxy AuthGenAPI
 

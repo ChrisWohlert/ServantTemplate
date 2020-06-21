@@ -54,8 +54,8 @@ class ToInputField a where
 instance ToInputField String where
   toInputField n v = InputField "text" v n
 
-instance (ToInputField a, LabelVal l) => ToInputField (FormInput l a) where
-  toInputField n (FormInput v) = LabelField (labelVal (Proxy :: Proxy l)) (toInputField n v)
+instance (ToInputField a, LabelVal l) => ToInputField (LabelField l a) where
+  toInputField n (LabelField v) = InputLabelField (labelVal (Proxy :: Proxy l)) (toInputField n v)
 
 instance ToInputField Int where
   toInputField n v = InputField "number" (show v) n

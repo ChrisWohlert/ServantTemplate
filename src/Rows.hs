@@ -54,5 +54,5 @@ class ToColumn a where
 instance ToColumn String where
   toColumn = RowColumn
 
-instance (ToColumn a) => ToColumn (FormInput l a) where
-  toColumn (FormInput v) = toColumn v
+instance (ToColumn a) => ToColumn (LabelField l a) where
+  toColumn (LabelField v) = toColumn v

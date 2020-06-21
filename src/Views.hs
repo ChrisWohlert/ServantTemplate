@@ -1,6 +1,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE DataKinds             #-}
 
 
 module Views where
@@ -22,6 +23,8 @@ import Models
 import Components
 import Servant.Links
 import Servant.API
+import Tables
+import Labels
 import Data.Text hiding (map,)
 
 
@@ -29,6 +32,8 @@ data Welcome = Welcome
 
 instance ToJSON Book
 instance FromJSON Book
+
+instance ToTableHeaders Book
 
 instance HtmlComponent a => ToMarkup (Layout a) where
     toMarkup = html
@@ -64,13 +69,23 @@ instance ToJSON a => ToJSON (Layout a) where
 instance ToJSON a => ToJSON (Table a) where
     toJSON (Table hs rows) = toJSON rows
 
-instance HtmlComponent [Book] where
+instance ToJSON a => ToJSON (LabelField l a) where
+    toJSON (LabelField x) = toJSON x
+
+instance FromJSON a => FromJSON (LabelField l a)
+
+instance (HtmlComponent a) => HtmlComponent [a] where
     html xs = mconcat $ map html xs
 
 instance (HtmlComponent a) => HtmlComponent (Table a) where
-    html (Table hs rows) = mconcat $ map (\ r -> do
-        p "Test"
-        html r) rows
+    html (Table hs rows) = table $ thead $ (mconcat $ map (th . html . toTableHeader) hs)
+
+instance HtmlComponent TableHeader where
+    html x = text x
+
+instance (ToMarkup a) => ToMarkup (LabelField l a) where
+    toMarkup (LabelField x) = toMarkup x
+
 
 class HtmlComponent a where
     html :: a -> Html
